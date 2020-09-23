@@ -6,9 +6,7 @@ node {
     	dir("SeleniumDemo") {
 	   sh "mvn clean install"
        }
-       	dir("SeleniumDemo/target") {
-	   sh "java -jar SeleniumDemo-0.0.1-SNAPSHOT.jar"
-       }
+
 		}
 }
 
