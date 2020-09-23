@@ -9,5 +9,5 @@ node {
        	dir("SeleniumDemo/target") {
 	   sh "java -jar SeleniumDemo-0.0.1-SNAPSHOT.jar"
        }
-		}
 }
+
