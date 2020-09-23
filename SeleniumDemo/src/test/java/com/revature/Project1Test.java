@@ -11,7 +11,9 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -40,38 +42,28 @@ public class Project1Test {
 
 	@Before
 	public void setUp() throws Exception {
-		this.page = new LoginPage(driver);
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void testLoginHeader() {
-		assertEquals(page.getHeader(), "Login");
-	}
 	
 	@Test
-	public void testSuccessfulLogin() {
-		page.setUsername("taemyles");
-		page.setPassword("pass");
-		page.submit();
-		WebDriverWait wait = new WebDriverWait(driver, 60);
-		wait.until(ExpectedConditions.urlMatches("/home"));
-		assertEquals("http://localhost:4200/home", driver.getCurrentUrl());
-	}
-	
-	@Test
-	public void testFailedLogin() {
-		page.setUsername("taemyles");
-		page.setPassword("incorrectpass");
-		page.submit();
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		if(wait.until(ExpectedConditions.alertIsPresent()) == null) {
-			fail("Alert was expected");
-		}
+	public void testSelenium() throws InterruptedException {
+		File file = new File("src/main/resources/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://google.com");
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);	
+		WebElement searchBar = driver.findElement(By.name("q"));
+		WebElement submitButton = driver.findElement(By.name("btnK"));
+		searchBar.sendKeys("Do a barrel roll");
+		submitButton.click();
+		TimeUnit.SECONDS.sleep(10);
 		
-		driver.switchTo().alert().accept();
+		driver.get("https://google.com");
 	}
+
 }
